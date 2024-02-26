@@ -1,0 +1,108 @@
+{
+  "success": true,
+  "data": {
+      "count": 5,
+      "next": null,
+      "previous": null,
+      "results": [
+          {
+              "id": 94,
+              "date": "2024-02-27",
+              "time": "23:59",
+              "notes": "",
+              "prediction": false,
+              "branch": "מטבח מרכזי",
+              "branch_id": 1,
+              "order_type": null,
+              "event_id": null,
+              "recurrence": 1,
+              "customer": "אורי וגל שכטר",
+              "customer_id": 14,
+              "num_of_guests": null,
+              "source": "הוקלד ידנית",
+              "created_at": "15/01/2024 08:49",
+              "updated_at": "15/01/2024 08:49",
+              "status": "AP"
+          },
+          {
+              "id": 1907,
+              "date": "2024-02-27",
+              "time": "23:59",
+              "notes": "",
+              "prediction": false,
+              "branch": "מטבח מרכזי",
+              "branch_id": 1,
+              "order_type": null,
+              "event_id": 120,
+              "recurrence": 2,
+              "customer": "עוזיאל וחן רון",
+              "customer_id": 1,
+              "num_of_guests": null,
+              "source": "הוקלד ידנית",
+              "created_at": "17/01/2024 12:47",
+              "updated_at": "17/01/2024 12:47",
+              "status": "AP"
+          },
+          {
+              "id": 3719,
+              "date": "2024-02-27",
+              "time": "23:59",
+              "notes": "",
+              "prediction": false,
+              "branch": "מטבח מרכזי",
+              "branch_id": 1,
+              "order_type": null,
+              "event_id": null,
+              "recurrence": 3,
+              "customer": "עוזיאל וחן רון",
+              "customer_id": 1,
+              "num_of_guests": 7,
+              "source": "הוקלד ידנית",
+              "created_at": "17/01/2024 12:47",
+              "updated_at": "17/01/2024 12:47",
+              "status": "AP"
+          },
+          {
+              "id": 5531,
+              "date": "2024-02-27",
+              "time": "23:59",
+              "notes": "",
+              "prediction": false,
+              "branch": "מטבח מרכזי",
+              "branch_id": 1,
+              "order_type": "example 2",
+              "event_id": null,
+              "recurrence": 4,
+              "customer": "עוזיאל וחן רון",
+              "customer_id": 1,
+              "num_of_guests": null,
+              "source": "הוקלד ידנית",
+              "created_at": "17/01/2024 12:47",
+              "updated_at": "17/01/2024 12:47",
+              "status": "AP"
+          },
+          {
+              "id": 7343,
+              "date": "2024-02-27",
+              "time": "23:59",
+              "notes": "",
+              "prediction": false,
+              "branch": "מטבח מרכזי",
+              "branch_id": 1,
+              "order_type": "example1",
+              "event_id": null,
+              "recurrence": 5,
+              "customer": "עוזיאל וחן רון",
+              "customer_id": 1,
+              "num_of_guests": null,
+              "source": "הוקלד ידנית",
+              "created_at": "17/01/2024 12:47",
+              "updated_at": "17/01/2024 12:47",
+              "status": "AP"
+          }
+      ]
+  }
+}
+
+
+
