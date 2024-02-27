@@ -5,3 +5,18 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.add-btn {
+  padding: 0.5em 0.8em;
+  color: var(--lighter-color);
+  font-size: 1em;
+  border-radius: 5px;
+  background-color: #4EAE5A;
+  box-shadow: 1px 1px 1px var(--light-color);
+  transition: all 0.2s;
+}
+.add-btn:hover {
+  background-color: rgba(46, 139, 87, 0.8);
+  transition: all 0.2s;
+
+}

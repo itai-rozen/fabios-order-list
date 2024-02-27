@@ -1,3 +1,13 @@
+:root {
+  --text-color: #232323;
+  --text-color: #AAAAAA;
+  --border-color: #232323;
+  --box-shadow: 2px 2px 2px var(--border-color);
+  --error-color: #d3212d;
+  --success-color: #2e8b57;
+  --light-color: #DCDCDC;
+  --lighter-color: #F9F9F9;
+}
 html {
   width: 100vw;
   height: 100vh;
@@ -5,5 +15,6 @@ html {
   padding: 0;
   box-sizing: border-box;
 }
+
 
 

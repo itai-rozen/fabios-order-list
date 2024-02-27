@@ -12,9 +12,43 @@
 }
 
 .form-container > form {
+  width: 50%;
+  height: 75%;
   padding: 1em;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   background-color: white;
+  position: relative;
 }
+
+.form-container > form > *:not(button) {
+  margin: 0 3em;
+  display: flex;
+  justify-content: space-between;
+}
+input, textarea {
+  padding: 5px 4px;
+  direction: rtl;
+  width: 66%;
+}
+
+.close-btn {
+  position: absolute;
+  text-align: center;
+  background-color: var(--error-color);
+  color: #fff;
+  top: 2px;
+  left: 2px;
+  font-size: 1em;
+  padding: 4px 8px;
+}
+
+.submit-btn {
+  width: 30%;
+  background-color: var(--success-color);
+  margin: 0 auto;
+  color: var(--lighter-color);
+  padding: .8em;
+}
+

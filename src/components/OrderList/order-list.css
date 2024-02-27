@@ -34,6 +34,26 @@
   overflow-x: hidden;
   transition: all 0.3s ease-in;
 }
+
+.order-list-headers {
+  display: flex;
+  justify-content: space-between;
+  direction: rtl;
+  background-color: var(--lighter-color);
+  color: var(--text-color);
+  cursor:default;
+}
+.order-list-headers > p {
+  flex: 1;
+  text-align: right;
+}
+.order-list-headers > p:first-child, 
+.order-list-headers > p:last-child {
+  flex: unset;
+  width: 12%;
+  margin: auto 0;
+}
+
 .aside.expanded-order {
   flex-grow: 1;
   flex-shrink: 0;
