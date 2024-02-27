@@ -1,5 +1,7 @@
 import { ReactNode, useState } from 'react'
 import './order.css'
+import { InvalidateQueryFilters, useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteOrder } from '../../api';
 export interface OrderType {
   orderDetails: {
     createdAt: string,
@@ -23,7 +25,16 @@ export interface OrderType {
 
 export default function Order({orderDetails, setExpandedOrder }:  OrderType): ReactNode {
   const [expand, setExpand] = useState<boolean>(false)
+  const clientQuery = useQueryClient();
+  const { mutateAsync: deleteOrderMutate } = useMutation({
+    mutationFn: (orderId: string) => deleteOrder(orderId),
+    onSuccess: () => {
+      alert('deleted succesfully')
+      clientQuery.invalidateQueries(['orders'] as InvalidateQueryFilters)
+    },
+  }) 
   return <label className={`order-container ${expand && 'expanded'}`}>
+      <button onClick={() => deleteOrderMutate(orderDetails.id)}>X</button>
       <input type="checkbox" name="" id="" onChange={(e) => !!setExpandedOrder && setExpandedOrder( (e.target.checked ? orderDetails : undefined) )} />
       <div className="order customer-container">
         <h5>{orderDetails.customer}</h5>

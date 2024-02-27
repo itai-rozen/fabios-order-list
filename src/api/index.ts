@@ -5,16 +5,29 @@ export async function getOrders() {
 }
 
 export async function createOrder(req: any) {
-  const method = 'POST'
+  const method = 'POST';
   const headers = {
     'Content-Type': 'application/json'
-  } 
-  const body = JSON.stringify(req)
+  };
+  const body = JSON.stringify(req);
   try {
-    const res = await fetch(URL, {body, method, headers})
+    const res = await fetch(URL, {body, method, headers});
     console.log('res: ', res)
   } catch(err) {
-    console.log('err @createOrder: ', err)
+    console.log('err @createOrder: ', err);
   }
 
+}
+
+export async function deleteOrder(id: string) {
+  const method = 'DELETE';
+  console.log('delete id: ', id)
+  const headers = {
+    'Content-Type': 'application/json'
+  };
+  try {
+    await fetch(`${URL}/${id}`, {method, headers});
+  } catch(err) {
+    console.log('err @deleteOrder: ', err)
+  }
 }
