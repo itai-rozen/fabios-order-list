@@ -1,26 +1,47 @@
 import './order-form.css'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { createOrder } from '../../api'
+import { createOrder, editOrder } from '../../api'
 import { getRandomInt } from '../../utils'
 import { InvalidateQueryFilters, useMutation, useQueryClient } from '@tanstack/react-query'
-export default function OrderForm({ setShowForm }: { setShowForm: Function }) {
-  interface formInputsInterface {
-    customer: string,
-    branch: string,
-    source: string,
-    order_type: string,
-    notes: string,
-    id: string,
-    _id: number,
-    priority: 1|2|3,
-    createdAt: string,
-    branch_id: number,
-    customer_id: number,
-    status: string
-  }
-  const {register, handleSubmit} = useForm<formInputsInterface>()
+import { OrderType } from '../Order/Order'
+
+export interface formInputsInterface {
+  customer: string,
+  branch: string,
+  source: string,
+  order_type: string,
+  notes: string,
+  id: string,
+  _id?: number,
+  priority?: 1|2|3,
+  createdAt?: string,
+  branch_id?: number,
+  customer_id?: number,
+  status?: string
+}
+export default function OrderForm({ setShowForm, orderDetails }: { setShowForm: Function, orderDetails?: OrderType }) {
+
+  const {register, handleSubmit} = useForm<formInputsInterface>({
+    defaultValues: {
+      customer: orderDetails?.customer,
+      branch: orderDetails?.branch,
+      notes: orderDetails?.notes,
+      source: orderDetails?.source,
+      order_type: orderDetails?.order_type
+    }
+  })
   const queryClient = useQueryClient();
-  const onSubmit: SubmitHandler<formInputsInterface> = async (order) => {
+
+  const onEdit: SubmitHandler<formInputsInterface> = async (order: formInputsInterface) => {
+    console.log('order details: ', orderDetails)
+    order.id = orderDetails!.id;
+    try {
+      await EditOrderMutation(order);
+    } catch(err) {
+      console.log('err @onEdit: ', err)
+    }
+  }
+  const onCreate: SubmitHandler<formInputsInterface> = async (order) => {
     order.id = crypto.randomUUID();
     order._id = getRandomInt(1, 9999999);
     order.priority = getRandomInt(1, 3) as 1|2|3;
@@ -29,11 +50,21 @@ export default function OrderForm({ setShowForm }: { setShowForm: Function }) {
     order.customer_id = getRandomInt(1, 999);
     order.status = 'pending';
     try {
-      await AddOrderMutation(order)
+      await AddOrderMutation(order);
     } catch(err) {
-      console.log('err @OrderForm.onSubmit(): ', err)
+      console.log('err @OrderForm.onSubmit(): ', err);
     }
   }
+  const onSubmit: SubmitHandler<formInputsInterface> = (orderDetails) ? onEdit : onCreate;
+
+  const { mutateAsync: EditOrderMutation } = useMutation({
+    mutationFn: editOrder,
+    onSuccess: () => {
+      alert('הזמנה עודכנה בהצלחה')
+      setShowForm(false)
+      queryClient.invalidateQueries(["orders"] as InvalidateQueryFilters)
+    }
+  })
   const { mutateAsync: AddOrderMutation } = useMutation({
     mutationFn: createOrder,
     onSuccess: () => {
@@ -48,19 +79,19 @@ export default function OrderForm({ setShowForm }: { setShowForm: Function }) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="">
         לקוח
-        <input type="text"  {...register('customer', { required: true}) } placeholder='לקוח שם מלא' />
+        <input type="text"  {...register('customer', { required: true}) }  placeholder='לקוח שם מלא' />
       </label>
       <label htmlFor="">
         סניף
-        <input type="text" {...register('branch', { required: true}) } placeholder='סניף' />
+        <input type="text" {...register('branch', { required: true}) }  placeholder='סניף' />
       </label>
       <label htmlFor="">
         מקור הזמנה
-        <input type="text" {...register('source', { required: true})} placeholder='מקור הזמנה' />
+        <input type="text" {...register('source', { required: true})}  placeholder='מקור הזמנה' />
       </label>
       <label htmlFor="">
         סוג הזמנה
-        <input type="text" {...register('order_type')} placeholder='סוג הזמנה' />
+        <input type="text" {...register('order_type')}  placeholder='סוג הזמנה' />
       </label>
       <label htmlFor="">
         הערות
