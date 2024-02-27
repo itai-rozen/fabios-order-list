@@ -1,5 +1,5 @@
 import './order-list.css';
-import { ReactNode, useState, useEffect } from 'react';
+import { ReactNode, useState } from 'react';
 import Order, { OrderType } from '../Order/Order';
 // import { data } from './../../data.json';
 import { useQuery } from '@tanstack/react-query';
@@ -19,7 +19,7 @@ export default function OrderList(): ReactNode {
       {isLoading && <div>Loading...</div>}
       <aside className={`aside ${exapandedOrder && 'expanded-order'}`}>
       { 
-        exapandedOrder && <Order orderDetails={exapandedOrder as any} />
+        exapandedOrder && <Order orderDetails={exapandedOrder}  setExpandedOrder={setExpandedOrder}/>
       }
       </aside>
       <main className='order-list'>
