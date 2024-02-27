@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { data } from './data.json'
 import './App.css'
 import OrderList from './components/OrderList/OrderList'
 import Header from './components/Header/Header'
