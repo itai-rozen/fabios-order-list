@@ -39,17 +39,16 @@ export default function Order({ orderDetails, setExpandedOrder }: { orderDetails
     <>
     <div className="order-wrapper">
       <div className="action-btn-container">
-        <button style={{background: 'red'}} className='action-btn' onClick={() =>  deleteOrderMutate(orderDetails.id) }><img width={15} src={trash} alt='Delete' /></button>
-        <button style={{background: 'green'}} className='action-btn' onClick={() =>  setShowForm(true) }><img width={15} src={edit} alt='Edit' /></button>
+        <button className='action-btn red-bg' onClick={() =>  deleteOrderMutate(orderDetails.id) }><img width={15} src={trash} alt='Delete' /></button>
+        <button className='action-btn green-bg' onClick={() =>  setShowForm(true) }><img width={15} src={edit} alt='Edit' /></button>
       </div>
       <label className={`order-container ${expand && 'expanded'}`} onClick={() => setExpand(!expand)}>
-
-        <input type="checkbox" name="" id="" onChange={(e) => !!setExpandedOrder && setExpandedOrder((e.target.checked ? orderDetails : undefined))} />
+        <input type="checkbox" className="order-checkbox" onChange={(e) => !!setExpandedOrder && setExpandedOrder((e.target.checked ? orderDetails : undefined))} />
         <div className="order customer-container">
           <h5>{orderDetails.customer}</h5>
-          <small>{orderDetails.id}</small>
+          <small>{orderDetails._id}</small>
         </div>
-        <p className='order'>{orderDetails.createdAt}</p>
+        <p className='order'>{orderDetails.createdAt.slice(0,10)}</p>
         <p className='order'>{orderDetails.branch}</p>
         <p className="order status">{orderDetails.status}</p>
         <p className="order price">231.51</p>

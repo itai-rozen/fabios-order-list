@@ -5,9 +5,7 @@ import { useState } from 'react'
 export default function Header() {
   const [showForm, setShowForm] = useState<boolean>(false)
   return <div className='header-container'>
-    <div className="btn-container">
-      <button onClick={() => setShowForm(true)}>add order +</button>
-    </div>
+    <button className='add-btn' onClick={() => setShowForm(true)}>הוספת הזמנה +</button>
     <div className="inputs-container">
       <input type="text" placeholder='free text' />
       <input type="datetime" name="" id="" placeholder='01/02/2024' />

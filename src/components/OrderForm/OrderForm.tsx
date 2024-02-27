@@ -13,7 +13,7 @@ export interface formInputsInterface {
   notes: string,
   id: string,
   _id?: number,
-  priority?: 1|2|3,
+  priority?: 1 | 2 | 3,
   createdAt?: string,
   branch_id?: number,
   customer_id?: number,
@@ -21,7 +21,7 @@ export interface formInputsInterface {
 }
 export default function OrderForm({ setShowForm, orderDetails }: { setShowForm: Function, orderDetails?: OrderType }) {
 
-  const {register, handleSubmit} = useForm<formInputsInterface>({
+  const { register, handleSubmit } = useForm<formInputsInterface>({
     defaultValues: {
       customer: orderDetails?.customer,
       branch: orderDetails?.branch,
@@ -37,21 +37,21 @@ export default function OrderForm({ setShowForm, orderDetails }: { setShowForm: 
     order.id = orderDetails!.id;
     try {
       await EditOrderMutation(order);
-    } catch(err) {
+    } catch (err) {
       console.log('err @onEdit: ', err)
     }
   }
   const onCreate: SubmitHandler<formInputsInterface> = async (order) => {
     order.id = crypto.randomUUID();
     order._id = getRandomInt(1, 9999999);
-    order.priority = getRandomInt(1, 3) as 1|2|3;
+    order.priority = getRandomInt(1, 3) as 1 | 2 | 3;
     order.createdAt = new Date().toLocaleString();
     order.branch_id = getRandomInt(1, 999);
     order.customer_id = getRandomInt(1, 999);
     order.status = 'pending';
     try {
       await AddOrderMutation(order);
-    } catch(err) {
+    } catch (err) {
       console.log('err @OrderForm.onSubmit(): ', err);
     }
   }
@@ -75,29 +75,33 @@ export default function OrderForm({ setShowForm, orderDetails }: { setShowForm: 
   })
 
   return <div className='form-container'>
-    <button onClick={() => setShowForm(false)}>X</button>
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="">
-        לקוח
-        <input type="text"  {...register('customer', { required: true}) }  placeholder='לקוח שם מלא' />
-      </label>
-      <label htmlFor="">
-        סניף
-        <input type="text" {...register('branch', { required: true}) }  placeholder='סניף' />
-      </label>
-      <label htmlFor="">
-        מקור הזמנה
-        <input type="text" {...register('source', { required: true})}  placeholder='מקור הזמנה' />
-      </label>
-      <label htmlFor="">
-        סוג הזמנה
-        <input type="text" {...register('order_type')}  placeholder='סוג הזמנה' />
-      </label>
-      <label htmlFor="">
-        הערות
-        <textarea placeholder='הערות' {...register('notes')} cols={30} rows={10}></textarea>
-      </label>
-      <input type="submit" value="Submit" />
+      <button className='close-btn' onClick={() => setShowForm(false)}>X</button>
+      <div>
+        <input type="text" id="customer" {...register('customer', { required: true })} placeholder='לקוח שם מלא' />
+        <label htmlFor="customer">לקוח</label>
+      </div>
+      <div>
+
+        <input type="text" id="branch" {...register('branch', { required: true })} placeholder='סניף' />
+        <label htmlFor="branch">סניף</label>
+      </div>
+      <div>
+
+        <input type="text" id='source' {...register('source', { required: true })} placeholder='מקור הזמנה' />
+        <label htmlFor="source">מקור הזמנה</label>
+      </div>
+      <div>
+
+        <input type="text" id='order_type' {...register('order_type')} placeholder='סוג הזמנה' />
+        <label htmlFor="order_type">סוג הזמנה</label>
+      </div>
+      <div>
+
+        <textarea placeholder='הערות' id="notes" {...register('notes')} cols={30} rows={10}></textarea>
+        <label htmlFor="notes">הערות</label>
+      </div>
+      <button className='submit-btn' type="submit" >סיימתי</button>
     </form>
   </div>
 }

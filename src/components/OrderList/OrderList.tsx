@@ -23,6 +23,15 @@ export default function OrderList(): ReactNode {
       }
       </aside>
       <main className='order-list'>
+      <div className="order-list-headers">
+        <p></p>
+        <p>הזמנה</p>
+        <p>תאריך</p>
+        <p>סניף</p>
+        <p>סטטוס</p>
+        <p>מחיר</p>
+        <p></p>
+      </div>
       {
         orders?.map((order:OrderType)  => {
           return <Order key={order.id} setExpandedOrder={setExpandedOrder} orderDetails={order} />
