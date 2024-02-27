@@ -2,8 +2,8 @@ import { ReactNode, useState } from 'react'
 import './order.css'
 import { InvalidateQueryFilters, useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteOrder } from '../../api';
+import OrderForm from '../OrderForm/OrderForm';
 export interface OrderType {
-  orderDetails: {
     createdAt: string,
     customer: string,
     userName: string,
@@ -19,22 +19,23 @@ export interface OrderType {
     id: string,
     time: string,
     order_type: string,
-  },
-  setExpandedOrder?: Function,
 }
 
-export default function Order({orderDetails, setExpandedOrder }:  OrderType): ReactNode {
-  const [expand, setExpand] = useState<boolean>(false)
+export default function Order({orderDetails, setExpandedOrder }:  {orderDetails: OrderType, setExpandedOrder: Function}): ReactNode {
+  const [expand, setExpand] = useState<boolean>(false);
+  const [showForm, setShowForm] = useState<boolean>(false);
+
   const clientQuery = useQueryClient();
   const { mutateAsync: deleteOrderMutate } = useMutation({
     mutationFn: (orderId: string) => deleteOrder(orderId),
     onSuccess: () => {
-      alert('deleted succesfully')
-      clientQuery.invalidateQueries(['orders'] as InvalidateQueryFilters)
+      alert('deleted succesfully');
+      clientQuery.invalidateQueries(['orders'] as InvalidateQueryFilters);
     },
   }) 
-  return <label className={`order-container ${expand && 'expanded'}`}>
+  return <div className={`order-container ${expand && 'expanded'}`}>
       <button onClick={() => deleteOrderMutate(orderDetails.id)}>X</button>
+      <button onClick={() => setShowForm(true)}>UPDATE</button>
       <input type="checkbox" name="" id="" onChange={(e) => !!setExpandedOrder && setExpandedOrder( (e.target.checked ? orderDetails : undefined) )} />
       <div className="order customer-container">
         <h5>{orderDetails.customer}</h5>
@@ -53,5 +54,8 @@ export default function Order({orderDetails, setExpandedOrder }:  OrderType): Re
         <p className="order">{orderDetails.time}</p>
         <p className="order">{orderDetails.notes}</p>
       </>}
-  </label>
+    {
+      showForm && <OrderForm orderDetails={orderDetails} setShowForm={setShowForm} />
+    }
+  </div>
 }
