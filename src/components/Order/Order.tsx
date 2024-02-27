@@ -2,23 +2,21 @@ import { ReactNode, useState } from 'react'
 import './order.css'
 export interface OrderType {
   orderDetails: {
-    id: number,
-    date: string,
-    time: string,
-    notes: string,
-    prediction: boolean,
-    branch: string,
-    branch_id: number,
-    order_type: string|null,
-    event_id: number|null,
-    recurrence: number,
+    createdAt: string,
     customer: string,
+    userName: string,
+    notes: string,
+    branch: string,
     customer_id: number,
-    num_of_guests: number|null,
+    date: number,
+    priority: number,
+    branch_id: number,
     source: string,
-    created_at: string,
-    updated_at: string,
-    status: string
+    status: string,
+    _id: number,
+    id: string,
+    time: string,
+    order_type: string,
   },
   setExpandedOrder?: Function,
 }
@@ -31,7 +29,7 @@ export default function Order({orderDetails, setExpandedOrder }:  OrderType): Re
         <h5>{orderDetails.customer}</h5>
         <small>{orderDetails.id}</small>
       </div>
-      <p className='order'>{orderDetails.updated_at}</p>
+      <p className='order'>{orderDetails.createdAt}</p>
       <p className='order'>{orderDetails.branch}</p>
       <p className="order status">{orderDetails.status}</p>
       <p className="order price">231.51</p>
