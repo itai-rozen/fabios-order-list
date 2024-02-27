@@ -31,14 +31,22 @@
 } */
 .order-list {
   width: 100%;
-  min-width: 20%;
+  overflow: hidden;
+  transition: all 0.3s ease-in;
 }
-.expanded-order {
-  flex: 0 0 80%;
+.aside.expanded-order {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 85%;
   background-color: white;
   z-index: 1;
   margin-right: 1em;
+  transition: 0.3s ease-in-out;
 }
 .expanded-order > * {
   height: 100%;
+}
+.aside:not(.expanded-order) {
+  transition: 0.3s;
+  flex-grow: 0.0001;
 }
