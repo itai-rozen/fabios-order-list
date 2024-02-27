@@ -1,5 +1,5 @@
 import { formInputsInterface } from "../components/OrderForm/OrderForm";
-import { string, z } from "zod";
+import { z } from "zod";
 const URL = 'https://61c2ed619cfb8f0017a3e77d.mockapi.io/contacts'
 export async function getOrders() {
   const res =   await (await fetch(URL)).json()
