@@ -6,27 +6,15 @@ import refresh from './../../assets/refresh.svg';
 import { InvalidateQueryFilters, useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteOrder } from '../../api';
 import OrderForm from '../OrderForm/OrderForm';
-export interface OrderType {
-  createdAt: string,
-  customer: string,
-  userName: string,
-  notes: string,
-  branch: string,
-  customer_id: number,
-  date: number,
-  priority: number,
-  branch_id: number,
-  source: string,
-  status: string,
-  _id: number,
-  id: string,
-  time: string,
-  order_type: string,
-  price: number,
-  content: string,
+import { OrderType } from '../../interfaces';
+export interface OrderInterface {
+  orderDetails: OrderType,
+  setExpandedOrder: Function,
+  isExpanded: boolean,
+   expandOrderId?: string | undefined
 }
 
-export default function Order({ orderDetails, setExpandedOrder, isExpanded, expandOrderId }: { orderDetails: OrderType, setExpandedOrder: Function, isExpanded: boolean, expandOrderId?: string | undefined }): ReactNode {
+export default function Order({ orderDetails, setExpandedOrder, isExpanded, expandOrderId }: OrderInterface): ReactNode {
   const [showForm, setShowForm] = useState<boolean>(false);
   const clientQuery = useQueryClient();
   const { mutateAsync: deleteOrderMutate } = useMutation({

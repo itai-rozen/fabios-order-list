@@ -1,28 +1,17 @@
-import './order-form.css'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { createOrder, editOrder } from '../../api'
-import { getRandomInt } from '../../utils'
-import { InvalidateQueryFilters, useMutation, useQueryClient } from '@tanstack/react-query'
-import { OrderType } from '../Order/Order'
+import './order-form.css';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { createOrder, editOrder } from '../../api';
+import { getRandomInt } from '../../utils';
+import { InvalidateQueryFilters, useMutation, useQueryClient } from '@tanstack/react-query';
+import { OrderType } from '../../interfaces';
+import { FormInputsInterface } from '../../interfaces';
 
-export interface formInputsInterface {
-  customer: string,
-  branch: string,
-  source: string,
-  order_type: string,
-  notes: string,
-  id: string,
-  _id?: number,
-  priority?: 1 | 2 | 3,
-  createdAt?: string,
-  branch_id?: number,
-  customer_id?: number,
-  content: string,
-  status?: string,
-  price?: number
+export interface OrderFormInterface {
+  setShowForm: Function, 
+  orderDetails?: OrderType
 }
-export default function OrderForm({ setShowForm, orderDetails }: { setShowForm: Function, orderDetails?: OrderType }) {
-  const { register, handleSubmit } = useForm<formInputsInterface>({
+export default function OrderForm({ setShowForm, orderDetails }: OrderFormInterface) {
+  const { register, handleSubmit } = useForm<FormInputsInterface>({
     defaultValues: {
       customer: orderDetails?.customer,
       branch: orderDetails?.branch,
@@ -35,17 +24,16 @@ export default function OrderForm({ setShowForm, orderDetails }: { setShowForm: 
   })
   const queryClient = useQueryClient();
 
-  const onEdit: SubmitHandler<formInputsInterface> = async (order: formInputsInterface) => {
-    console.log('order details: ', order)
+  const onEdit: SubmitHandler<FormInputsInterface> = async (order: FormInputsInterface) => {
     order.id = orderDetails!.id;
     try {
       await EditOrderMutation(order);
     } catch (err) {
-      console.log('err @onEdit: ', err)
+      console.log('err @onEdit: ', err);
     }
   }
-  const onCreate: SubmitHandler<formInputsInterface> = async (order) => {
-    const statusOptions = ['ממתין לאישור', 'בוצע', 'מאושר', 'מבוטל']
+  const onCreate: SubmitHandler<FormInputsInterface> = async (order) => {
+    const statusOptions = ['ממתין לאישור', 'בוצע', 'מאושר', 'מבוטל'];
 
     order.id = crypto.randomUUID();
     order._id = getRandomInt(1, 9999999);
@@ -60,22 +48,22 @@ export default function OrderForm({ setShowForm, orderDetails }: { setShowForm: 
       console.log('err @OrderForm.onSubmit(): ', err);
     }
   }
-  const onSubmit: SubmitHandler<formInputsInterface> = (orderDetails) ? onEdit : onCreate;
+  const onSubmit: SubmitHandler<FormInputsInterface> = (orderDetails) ? onEdit : onCreate;
 
   const { mutateAsync: EditOrderMutation } = useMutation({
     mutationFn: editOrder,
     onSuccess: () => {
-      alert('הזמנה עודכנה בהצלחה')
-      setShowForm(false)
-      queryClient.invalidateQueries(["orders"] as InvalidateQueryFilters)
+      alert('הזמנה עודכנה בהצלחה');
+      setShowForm(false);
+      queryClient.invalidateQueries(["orders"] as InvalidateQueryFilters);
     }
   })
   const { mutateAsync: AddOrderMutation } = useMutation({
     mutationFn: createOrder,
     onSuccess: () => {
-      alert('הזמנה נוספה בהצלחה')
-      setShowForm(false)
-      queryClient.invalidateQueries(["orders"] as InvalidateQueryFilters)
+      alert('הזמנה נוספה בהצלחה');
+      setShowForm(false);
+      queryClient.invalidateQueries(["orders"] as InvalidateQueryFilters);
     }
   })
 
