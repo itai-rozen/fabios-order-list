@@ -1,6 +1,7 @@
 import './order-list.css';
 import { ReactNode, useState } from 'react';
-import Order, { OrderType } from '../Order/Order';
+import Order from '../Order/Order';
+import { OrderType } from '../../interfaces';
 import { useQuery } from '@tanstack/react-query';
 import { getOrders } from './../../api';
 import OrderHeaders from '../OrderHeaders/OrderHeaders';
@@ -11,7 +12,7 @@ export default function OrderList(): ReactNode {
     queryFn: () => getOrders(),
     queryKey: ["orders"]
   })
-  const [exapandedOrder, setExpandedOrder] = useState<OrderType|undefined>(undefined)
+  const [exapandedOrder, setExpandedOrder] = useState<OrderType|undefined>(undefined);
 
 
   return (

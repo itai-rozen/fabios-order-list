@@ -7,6 +7,7 @@ import { InvalidateQueryFilters, useMutation, useQueryClient } from '@tanstack/r
 import { deleteOrder } from '../../api';
 import OrderForm from '../OrderForm/OrderForm';
 import { OrderType } from '../../interfaces';
+
 export interface OrderInterface {
   orderDetails: OrderType,
   setExpandedOrder: Function,
@@ -25,7 +26,7 @@ export default function Order({ orderDetails, setExpandedOrder, isExpanded, expa
     },
   })
 
-  const formatDate = (date: number) => date;
+  const formatDate = (date: number) => new Date(date * 1000).toUTCString();
   const getStatusColor = (status: string): string => {
     if (status === 'ממתין לאישור')
       return 'await-approve';
@@ -49,7 +50,6 @@ export default function Order({ orderDetails, setExpandedOrder, isExpanded, expa
             isExpanded ? <>
               <div className="mobile-expanded-header only-mobile">
                 <div>
-
                   <input
                     type="checkbox"
                     className="order-checkbox no-mobile"

@@ -114,6 +114,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .order-container.expanded > *:not(input) {
   display: flex;
   flex-direction: column;
@@ -121,6 +122,9 @@
   height: 100%;
   font-size: 1.2em;
   margin-right: 1em;
+}
+.order-container.expanded > div:nth-of-type(3) {
+  width: 40vw;
 }
 
 .action-btn-container.expanded>.action-btn {
@@ -136,12 +140,9 @@
 
 .action-btn-container.expanded {
   display: none;
-  /* transform: translateX(0);
-  position: unset;
-  height: 10%;
-  width: 15%;
-  justify-content: space-between;
-  flex-direction: row; */
+}
+.order-container:not(.expanded) .order-checkbox {
+  margin-right: 0;
 }
 
 .order-container.expanded .order-checkbox-label {

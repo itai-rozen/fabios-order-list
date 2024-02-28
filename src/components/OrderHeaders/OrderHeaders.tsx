@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import './order-headers.css'
+import './order-headers.css';
 
 
 export default function OrderHeaders(): ReactNode {
