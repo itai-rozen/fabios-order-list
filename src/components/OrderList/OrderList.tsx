@@ -23,10 +23,10 @@ export default function OrderList(): ReactNode {
       }
       </aside>
       <main className='order-list'>
-      <OrderHeaders isExpanded={false} />
+      <OrderHeaders />
       {
         orders?.map((order:OrderType)  => {
-          return <Order key={order.id} setExpandedOrder={setExpandedOrder} isExpanded={false} orderDetails={order} />
+          return <Order key={order.id} setExpandedOrder={setExpandedOrder} isExpanded={false} expandOrderId={exapandedOrder?.id} orderDetails={order} />
         })
       }
       </main>
