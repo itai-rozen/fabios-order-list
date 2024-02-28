@@ -6,14 +6,15 @@ export async function getOrders() {
   return res
 }
 
-
 export async function createOrder(req: any) {
   const NewOrderSchema = z.object({
     customer: z.string(),
     branch: z.string(),
     notes: z.string(),
     source: z.string(),
-    order_type: z.string()
+    order_type: z.string(),
+    content: z.string(),
+    status: z.string()
   })
   try {
     const validatedOrder = NewOrderSchema.safeParse(req)
@@ -32,7 +33,6 @@ export async function createOrder(req: any) {
   } catch(err) {
     console.log('err @createOrder: ', err);
   }
-
 }
 
 export async function deleteOrder(id: string) {
@@ -55,7 +55,9 @@ export async function editOrder(orderDetails: formInputsInterface) {
     branch: z.string(),
     notes: z.string(),
     source: z.string(),
-    order_type: z.string()
+    order_type: z.string(),
+    content: z.string(),
+    status: z.string()
   })
   try {
     const validatedOrder = EditOrderSchema.safeParse(orderDetails)
