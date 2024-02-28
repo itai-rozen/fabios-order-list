@@ -16,5 +16,58 @@ html {
   box-sizing: border-box;
 }
 
+.only-mobile { display: none; }
+
+@media screen and (max-width: 800px) {
+  .only-mobile { display: block; }
+  .no-mobile { display: none;}
+
+  .app-container {
+    width: 100%;
+    margin: 0;
+  }
+  .order-wrapper {
+    margin: 0.3em;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+  .order-container {
+    height: 7em;
+  }
+  .order-container .order-checkbox {
+    order: -1;
+    font-size: 2em;
+  }
+  .order-container .order.status {
+    order: 1;
+  }
+  .order-container .order.date {
+    font-size: small;
+    order: 2;
+  }
+  .order-container .order.content {
+    order: 3;
+  }
+  .order-container .order.arrow {
+    order: 5;
+    margin: 10px;
+    padding: 0;
+    width: 20px;
+    text-align: left;
+  }
+  .order-container .price {
+    order: 2;
+  }
+
+  .aside.expanded-order {
+    width: 100vw;
+  }
+  .aside.expanded-order .order-wrapper {
+    margin: 0;
+    background-color: red;
+    width: 100vw;
+  }
+}
+
 
 
