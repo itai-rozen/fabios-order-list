@@ -1,9 +1,9 @@
 import './order-list.css';
 import { ReactNode, useState } from 'react';
 import Order, { OrderType } from '../Order/Order';
-// import { data } from './../../data.json';
 import { useQuery } from '@tanstack/react-query';
 import { getOrders } from './../../api';
+import OrderHeaders from '../OrderHeaders/OrderHeaders';
 
 
 export default function OrderList(): ReactNode {
@@ -19,22 +19,14 @@ export default function OrderList(): ReactNode {
       {isLoading && <div>Loading...</div>}
       <aside className={`aside ${exapandedOrder && 'expanded-order'}`}>
       { 
-        exapandedOrder && <Order orderDetails={exapandedOrder}  setExpandedOrder={setExpandedOrder}/>
+        exapandedOrder && <Order orderDetails={exapandedOrder} isExpanded={true}  setExpandedOrder={setExpandedOrder}/>
       }
       </aside>
       <main className='order-list'>
-      <div className="order-list-headers">
-        <p></p>
-        <p>הזמנה</p>
-        <p>תאריך</p>
-        <p>סניף</p>
-        <p>סטטוס</p>
-        <p>מחיר</p>
-        <p></p>
-      </div>
+      <OrderHeaders isExpanded={false} />
       {
         orders?.map((order:OrderType)  => {
-          return <Order key={order.id} setExpandedOrder={setExpandedOrder} orderDetails={order} />
+          return <Order key={order.id} setExpandedOrder={setExpandedOrder} isExpanded={false} orderDetails={order} />
         })
       }
       </main>

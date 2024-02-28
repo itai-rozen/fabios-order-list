@@ -18,5 +18,15 @@
 .add-btn:hover {
   background-color: rgba(46, 139, 87, 0.8);
   transition: all 0.2s;
-
+}
+.inputs-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.inputs-container {
+  display: flex;
+}
+.inputs-container > * {
+  margin-left: 0.5em;
+  margin-bottom: 0.5em;
 }

@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import './App.css'
-import OrderList from './components/OrderList/OrderList'
-import Header from './components/Header/Header'
+import './App.css';
+import OrderList from './components/OrderList/OrderList';
+import Header from './components/Header/Header';
 
 const queryClient = new QueryClient({
   defaultOptions: {
