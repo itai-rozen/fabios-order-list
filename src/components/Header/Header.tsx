@@ -7,11 +7,26 @@ import filter from './../../assets/filter.svg';
 import calendar from './../../assets/calendar.svg';
 import settings from './../../assets/settings.svg';
 import arrowDown from './../../assets/arrowDown.svg';
+import threeDots from './../../assets/threeDots.svg';
 
 
 export default function Header() {
   const [showForm, setShowForm] = useState<boolean>(false)
-  return <div className='header-container'>
+  return <>
+  <div className='mobile-header-wrapper only-mobile'>
+    <div className="mobile-header-container only-mobile">
+      <div className="mobile-dots"><img src={threeDots} alt="mobile menu" width={15} /></div>
+      <div className="mobile-tab green">כל ההזמנות</div>
+      <div className="mobile-tab">ספקים</div>
+      <div className="mobile-tab">ליקוט</div>
+    </div>
+    <div className="input-container">
+        <img src={settings} alt="settings" width={15} />
+        <input type="text" placeholder='28.02.24 - 28.02.24' />
+        <img src={calendar} alt="calendar" width={15} />
+    </div>
+  </div>
+  <div className='header-container no-mobile'>
     <div>
       <button className='add-btn' onClick={() => setShowForm(true)}>הוספת הזמנה +</button>
       <p></p>
@@ -20,7 +35,7 @@ export default function Header() {
       <div className='inputs-container'>
         <div className="input-container">
           <img src={settings} alt="settings" width={15} />
-          <input type="text" placeholder='free text' />
+          <input type="text" placeholder='חיפוש חופשי...' />
           <img src={search} alt="search" width={15} />
 
         </div>
@@ -38,4 +53,5 @@ export default function Header() {
     </div>
     {showForm && <OrderForm setShowForm={setShowForm} />}
   </div>
+  </>
 }

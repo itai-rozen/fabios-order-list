@@ -64,8 +64,30 @@ html {
   }
   .aside.expanded-order .order-wrapper {
     margin: 0;
-    background-color: red;
     width: 100vw;
+  }
+
+  .mobile-header-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .mobile-header-container {
+    direction: rtl;
+    display: flex;
+    align-items: center;
+  } 
+  .mobile-tab {
+    background-color: var(--lighter-color);
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 0.5em 1em;
+    margin:  0.5em;
+  }
+  .mobile-tab.green {
+    background-color: #DFEEE1;
+    color: #AFD9B4;
+    font-weight: 600;
+    border: 2px solid #AFD9B4;
   }
 }
 
