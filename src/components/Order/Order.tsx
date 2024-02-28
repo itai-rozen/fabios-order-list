@@ -89,7 +89,7 @@ export default function Order({ orderDetails, setExpandedOrder, isExpanded, expa
               <input
                 type="checkbox"
                 className="order-checkbox"
-                checked={!!expandOrderId}
+                checked={!!expandOrderId && (expandOrderId === orderDetails.id)}
                 onChange={(e) => !!setExpandedOrder && setExpandedOrder((e.target.checked ? orderDetails : undefined))}
               />
               <div className="order customer-container no-mobile">
