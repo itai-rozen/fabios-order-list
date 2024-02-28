@@ -17,23 +17,26 @@ export interface formInputsInterface {
   createdAt?: string,
   branch_id?: number,
   customer_id?: number,
-  status?: string
+  content: string,
+  status?: string,
+  price?: number
 }
 export default function OrderForm({ setShowForm, orderDetails }: { setShowForm: Function, orderDetails?: OrderType }) {
-
   const { register, handleSubmit } = useForm<formInputsInterface>({
     defaultValues: {
       customer: orderDetails?.customer,
       branch: orderDetails?.branch,
       notes: orderDetails?.notes,
       source: orderDetails?.source,
-      order_type: orderDetails?.order_type
+      order_type: orderDetails?.order_type,
+      status: orderDetails?.status || 'מבוטל',
+      content: orderDetails?.content
     }
   })
   const queryClient = useQueryClient();
 
   const onEdit: SubmitHandler<formInputsInterface> = async (order: formInputsInterface) => {
-    console.log('order details: ', orderDetails)
+    console.log('order details: ', order)
     order.id = orderDetails!.id;
     try {
       await EditOrderMutation(order);
@@ -42,13 +45,15 @@ export default function OrderForm({ setShowForm, orderDetails }: { setShowForm: 
     }
   }
   const onCreate: SubmitHandler<formInputsInterface> = async (order) => {
+    const statusOptions = ['ממתין לאישור', 'בוצע', 'מאושר', 'מבוטל']
+
     order.id = crypto.randomUUID();
     order._id = getRandomInt(1, 9999999);
     order.priority = getRandomInt(1, 3) as 1 | 2 | 3;
     order.createdAt = new Date().toLocaleString();
     order.branch_id = getRandomInt(1, 999);
     order.customer_id = getRandomInt(1, 999);
-    order.status = 'pending';
+    order.status = statusOptions[getRandomInt(0,4)] || 'מבוטל';
     try {
       await AddOrderMutation(order);
     } catch (err) {
@@ -82,22 +87,22 @@ export default function OrderForm({ setShowForm, orderDetails }: { setShowForm: 
         <label htmlFor="customer">לקוח</label>
       </div>
       <div>
-
         <input type="text" id="branch" {...register('branch', { required: true })} placeholder='סניף' />
         <label htmlFor="branch">סניף</label>
       </div>
       <div>
-
         <input type="text" id='source' {...register('source', { required: true })} placeholder='מקור הזמנה' />
         <label htmlFor="source">מקור הזמנה</label>
       </div>
       <div>
-
         <input type="text" id='order_type' {...register('order_type')} placeholder='סוג הזמנה' />
         <label htmlFor="order_type">סוג הזמנה</label>
       </div>
       <div>
-
+        <input type="text" id='content' {...register('content')} placeholder='תוכן הזמנה' />
+        <label htmlFor="content"> תוכן ההזמנה</label>
+      </div>
+      <div>
         <textarea placeholder='הערות' id="notes" {...register('notes')} cols={30} rows={10}></textarea>
         <label htmlFor="notes">הערות</label>
       </div>
