@@ -1,7 +1,7 @@
 .header-container {
   display: flex;
   width: 100%;
-  height: 10vh;
+  height: 15vh;
   justify-content: space-between;
   align-items: center;
 }
@@ -22,11 +22,32 @@
 .inputs-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: end;
 }
 .inputs-container {
   display: flex;
 }
-.inputs-container > * {
+.inputs-container > *, .input-container{
   margin-left: 0.5em;
   margin-bottom: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid var(--light-color);
+  padding:  0 0.4em;
+  font-size: 1em;
+  border-radius: 5px;
+  height: 40px;
 }
+
+.inputs-container input {
+  border: none;
+  outline: none;
+}
+.header-date-input::-webkit-calendar-picker-indicator {
+  display: none;
+  appearance: none ;
+}
+
+
+
