@@ -1,4 +1,4 @@
-import { formInputsInterface } from "../components/OrderForm/OrderForm";
+import { FormInputsInterface } from "../interfaces"; 
 import { z } from "zod";
 const URL = 'https://61c2ed619cfb8f0017a3e77d.mockapi.io/contacts'
 export async function getOrders() {
@@ -48,7 +48,7 @@ export async function deleteOrder(id: string) {
   }
 }
 
-export async function editOrder(orderDetails: formInputsInterface) {
+export async function editOrder(orderDetails: FormInputsInterface) {
   const EditOrderSchema = z.object({
     id: z.string(),
     customer: z.string(),
