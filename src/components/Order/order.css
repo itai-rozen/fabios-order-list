@@ -1,10 +1,11 @@
 .order-wrapper {
   position: relative;
-  border-radius: 1px;
   margin: 0.5em 0;
   padding: 1em;
   overflow: hidden;
   direction: rtl;
+  border: 1px solid var(--light-color);
+  border-radius: 10px;
 }
 
 .order-container {
@@ -12,11 +13,12 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  height: 5em;
 }
 
-.order-container>* {
+.order-container > * {
   flex: 1;
-  margin: 0 5%;
+  padding:  0 4%;
   text-overflow: ellipsis;
 }
 
@@ -40,7 +42,7 @@
   position: absolute;
   right: 0;
   top: 0;
-  transform: translateX(20px);
+  transform: translateX(35px);
   transition: 0.2s ease-out;
 }
 
@@ -75,20 +77,44 @@
 .order-checkbox {
   margin: 0;
   font-size: 3em;
-  display: block;
   width: 0.4em;
   height: 0.4em;
 }
+
+.status {
+  font-weight: bold;
+  text-align: center;
+  padding:0;
+}
+.status.await-approve {
+  background: #FAE7C3; 
+  color:#DCC399
+}
+.status.completed {
+  background: #C8E4CB; 
+  color:#84B58A
+}
+.status.approved {
+  background:#EBF3FF;
+  color: #7EA4E5
+}
+.status.cancelled {
+  background:#FFEDEB;
+  color: #F7B0AE
+}
+
 
 /* EXPANDED ORDER */
 .order-container.expanded {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 20%;
 }
 .order-container.expanded > * {
-  margin: 6.2%;
+  display: flex;
+  flex-direction: column;
+  width: 10em;
+  height: 100%;
   font-size: 1.2em;
 }
 
@@ -104,17 +130,12 @@
 }
 
 .action-btn-container.expanded {
-  transform: translateX(0);
+  display: none;
+  /* transform: translateX(0);
   position: unset;
   height: 10%;
   width: 15%;
   justify-content: space-between;
-  flex-direction: row;
+  flex-direction: row; */
 }
 
-@media screen and (max-width: 800px) {
-  .order-container {
-    background-color: red;
-  }
-
-}

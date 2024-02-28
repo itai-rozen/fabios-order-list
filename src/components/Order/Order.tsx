@@ -5,7 +5,6 @@ import trash from './../../assets/trash.svg';
 import { InvalidateQueryFilters, useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteOrder } from '../../api';
 import OrderForm from '../OrderForm/OrderForm';
-import OrderHeaders from '../OrderHeaders/OrderHeaders';
 export interface OrderType {
   createdAt: string,
   customer: string,
@@ -22,11 +21,12 @@ export interface OrderType {
   id: string,
   time: string,
   order_type: string,
+  price: number,
+  content: string,
 }
 
-export default function Order({ orderDetails, setExpandedOrder, isExpanded }: { orderDetails: OrderType, setExpandedOrder: Function, isExpanded: boolean }): ReactNode {
+export default function Order({ orderDetails, setExpandedOrder, isExpanded, expandOrderId }: { orderDetails: OrderType, setExpandedOrder: Function, isExpanded: boolean, expandOrderId?: string|undefined} ): ReactNode {
   const [showForm, setShowForm] = useState<boolean>(false);
-
   const clientQuery = useQueryClient();
   const { mutateAsync: deleteOrderMutate } = useMutation({
     mutationFn: (orderId: string) => deleteOrder(orderId),
@@ -36,46 +36,71 @@ export default function Order({ orderDetails, setExpandedOrder, isExpanded }: { 
     },
   })
 
-  const formatDate = (date:number) => date
+  const formatDate = (date: number) => date;
+  const getStatusColor = (status: string): string => {
+    if (status === 'ממתין לאישור')
+      return 'await-approve';
+    if (status === 'בוצע')
+      return 'completed';
+    if (status === 'מאושר')
+      return 'approved';
+    if (status === 'מבוטל')
+      return 'cancelled';
+    return '';
+  }
   return (
     <>
       <div className="order-wrapper">
-        <div className={`action-btn-container ${isExpanded && 'expanded'}`}>
+        <div className={`action-btn-container no-mobile ${isExpanded && 'expanded'}`}>
           <button className='action-btn red-bg' onClick={() => deleteOrderMutate(orderDetails.id)}><img width={15} src={trash} alt='Delete' /></button>
           <button className='action-btn green-bg' onClick={() => setShowForm(true)}><img width={15} src={edit} alt='Edit' /></button>
         </div>
         <label className={`order-container ${isExpanded && 'expanded'}`} >
           {
             isExpanded ? <>
+              <input
+                type="checkbox"
+                className="order-checkbox"
+                checked={isExpanded}
+                onChange={(e) =>  setExpandedOrder((e.target.checked ? orderDetails : undefined))}
+              />
               <div>
-                <OrderHeaders isExpanded={true} />
+                <p>תאריך אספקה</p>
+                <p>דחיפות</p>
+                <p>סניף</p>
+                <p>סוג הזמנה</p>
+                <p>מקור ההזמנה</p>
+                <p>תאריך יצירה</p>
+                <p>שעת יצירה</p>
+                <p>הערות</p>
               </div>
               <div>
+
                 <p className="order">{formatDate(orderDetails.date)}</p>
                 <p className="order">priority</p>
                 <p className='order'>{orderDetails.branch}</p>
-
                 <p className="order">{orderDetails.order_type}</p>
                 <p className="order">{orderDetails.source}</p>
                 <p className='order'>{orderDetails.createdAt.slice(0, 10)}</p>
-
-                <p className="order">{orderDetails.time}</p>
+                <p className="order">{orderDetails.createdAt.slice(11, 19)}</p>
                 <p className="order">{orderDetails.notes}</p>
               </div>
             </> : <>
               <input
                 type="checkbox"
                 className="order-checkbox"
+                checked={!!expandOrderId}
                 onChange={(e) => !!setExpandedOrder && setExpandedOrder((e.target.checked ? orderDetails : undefined))}
               />
-              <div className="order customer-container">
+              <div className="order customer-container no-mobile">
                 <h5>{orderDetails.customer}</h5>
                 <small>{orderDetails._id}</small>
               </div>
-              <p className='order'>{orderDetails.createdAt.slice(0, 10)}</p>
-              <p className='order'>{orderDetails.branch}</p>
-              <p className="order status">{orderDetails.status}</p>
-              <p className="order price">231.51</p>
+              <p className='order date'>{orderDetails.createdAt.slice(0, 10)}</p>
+              <p className='order no-mobile'>{orderDetails.branch}</p>
+              <p className={`order status ${getStatusColor(orderDetails.status)}`}>{orderDetails.status}</p>
+              <p className="order price">{orderDetails.price}₪</p>
+              <p className="order content only-mobile">{orderDetails.content || ''}</p>
               <p className='order arrow'> ⮜ </p>
             </>
           }
