@@ -22,15 +22,19 @@
   text-overflow: ellipsis;
 }
 
+
 .customer-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: self-end;
+
 }
 
 .customer-container>h5 {
-  margin: 0.2em;
+  margin-right: 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
 }
 
 .action-btn-container {
@@ -75,7 +79,7 @@
 }
 
 .order-checkbox {
-  margin: 0;
+  margin-right: 1em;
   font-size: 3em;
   width: 0.4em;
   height: 0.4em;
@@ -116,6 +120,7 @@
   width: 10em;
   height: 100%;
   font-size: 1.2em;
+  margin-right: 1em;
 }
 
 .action-btn-container.expanded>.action-btn {
