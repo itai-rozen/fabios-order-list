@@ -2,6 +2,7 @@ import { ReactNode, useState } from 'react';
 import './order.css';
 import edit from './../../assets/edit.svg';
 import trash from './../../assets/trash.svg';
+import refresh from './../../assets/refresh.svg';
 import { InvalidateQueryFilters, useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteOrder } from '../../api';
 import OrderForm from '../OrderForm/OrderForm';
@@ -25,7 +26,7 @@ export interface OrderType {
   content: string,
 }
 
-export default function Order({ orderDetails, setExpandedOrder, isExpanded, expandOrderId }: { orderDetails: OrderType, setExpandedOrder: Function, isExpanded: boolean, expandOrderId?: string|undefined} ): ReactNode {
+export default function Order({ orderDetails, setExpandedOrder, isExpanded, expandOrderId }: { orderDetails: OrderType, setExpandedOrder: Function, isExpanded: boolean, expandOrderId?: string | undefined }): ReactNode {
   const [showForm, setShowForm] = useState<boolean>(false);
   const clientQuery = useQueryClient();
   const { mutateAsync: deleteOrderMutate } = useMutation({
@@ -58,13 +59,32 @@ export default function Order({ orderDetails, setExpandedOrder, isExpanded, expa
         <label className={`order-container ${isExpanded && 'expanded'}`} >
           {
             isExpanded ? <>
-              <input
-                type="checkbox"
-                className="order-checkbox"
-                checked={isExpanded}
-                onChange={(e) =>  setExpandedOrder((e.target.checked ? orderDetails : undefined))}
-              />
-              <div>
+              <div className="mobile-expanded-header only-mobile">
+                <div>
+
+                  <input
+                    type="checkbox"
+                    className="order-checkbox no-mobile"
+                    id="order-mobile-checkbox"
+                    checked={isExpanded}
+                    onChange={(e) => setExpandedOrder((e.target.checked ? orderDetails : undefined))}
+                  />
+                  <label className='order-checkbox-label only-mobile'
+                    htmlFor="order-mobile-checkbox" >
+                    {'➔'}
+                  </label>
+                  <button className="add-btn">שמור שינויים</button>
+                </div>
+                <div>
+                  <h4>{orderDetails.content}</h4>
+                  <button className='refresh-btn'><img src={refresh} alt="refresh" width={15} /></button>
+                </div>
+                <div className="mobile-expanded-item-list">
+                  <p>רשימת פריטים</p>
+                  <p style={{borderBottom: '2px solid #AFD9B4'}}>פרטי הזמנה</p>
+                </div>
+              </div>
+              <div className='expanded-order-headers'>
                 <p>תאריך אספקה</p>
                 <p>דחיפות</p>
                 <p>סניף</p>
@@ -75,7 +95,6 @@ export default function Order({ orderDetails, setExpandedOrder, isExpanded, expa
                 <p>הערות</p>
               </div>
               <div>
-
                 <p className="order">{formatDate(orderDetails.date)}</p>
                 <p className="order">priority</p>
                 <p className='order'>{orderDetails.branch}</p>
@@ -90,7 +109,7 @@ export default function Order({ orderDetails, setExpandedOrder, isExpanded, expa
                 type="checkbox"
                 className="order-checkbox"
                 checked={!!expandOrderId && (expandOrderId === orderDetails.id)}
-                onChange={(e) => !!setExpandedOrder && setExpandedOrder((e.target.checked ? orderDetails : undefined))}
+                onChange={(e) => setExpandedOrder((e.target.checked ? orderDetails : undefined))}
               />
               <div className="order customer-container no-mobile">
                 <h5>{orderDetails.customer}</h5>
@@ -100,6 +119,7 @@ export default function Order({ orderDetails, setExpandedOrder, isExpanded, expa
               <p className='order no-mobile'>{orderDetails.branch}</p>
               <p className={`order status ${getStatusColor(orderDetails.status)}`}>{orderDetails.status}</p>
               <p className="order price">{orderDetails.price}₪</p>
+              <p className="order id only-mobile">{orderDetails._id}</p>
               <p className="order content only-mobile">{orderDetails.content || ''}</p>
               <p className='order arrow'> ⮜ </p>
             </>

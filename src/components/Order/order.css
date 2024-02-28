@@ -110,7 +110,7 @@
   justify-content: center;
   align-items: center;
 }
-.order-container.expanded > * {
+.order-container.expanded > *:not(input) {
   display: flex;
   flex-direction: column;
   width: 10em;
@@ -137,5 +137,9 @@
   width: 15%;
   justify-content: space-between;
   flex-direction: row; */
+}
+
+.order-container.expanded .order-checkbox-label {
+  display: none;
 }
 
